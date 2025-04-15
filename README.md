@@ -15,19 +15,18 @@ Permasalahan prediksi biaya medis penting untuk industri asuransi agar dapat men
 
 ### Problem Statements
 
-1. Bagaimana pengaruh variabel seperti usia, BMI, dan status merokok terhadap biaya medis individu?
-2. Dapatkah kita membangun model regresi yang mampu memprediksi biaya medis seseorang secara akurat?
+1. **Masalah 1**: Berapa perkiraan biaya asuransi untuk pria berusia 30 tahun, bukan perokok, dengan BMI 25, memiliki 1 anak, dan tinggal di wilayah tenggara?
+2. **Masalah 2**: Bagaimana status merokok memengaruhi perkiraan biaya asuransi, dengan asumsi faktor lain tetap?
 
 ### Goals
 
-1. Mengetahui variabel mana yang paling berpengaruh terhadap peningkatan biaya medis.
-2. Mengembangkan model regresi yang dapat memprediksi biaya medis dengan akurasi tinggi.
+1. Menghitung prediksi biaya medis untuk individu dengan karakteristik tertentu berdasarkan model machine learning.
+2. Menganalisis dampak status merokok terhadap besarnya biaya asuransi untuk individu dengan karakteristik yang sama.
 
 ### Solution Statement
 
 - Menggunakan algoritma **Linear Regression** sebagai baseline model.
-- Melakukan **feature engineering** dan **evaluasi model menggunakan RMSE dan R²**.
-- Melakukan **improvement** menggunakan **Polynomial Regression** atau **Random Forest Regressor** untuk melihat potensi peningkatan performa.
+- Melakukan **feature engineering** dan **evaluasi model menggunakan RMSE, MSE dan R²**.
 
 ## Data Understanding
 
@@ -62,7 +61,7 @@ Dataset diambil dari Kaggle dan memiliki 1338 baris data dengan fitur sebagai be
 
 Tahapan yang dilakukan:
 
-- Menghapus duplikat data (jika ada)
+- Menghapus duplikat data
 - Encoding variabel kategorikal menggunakan one-hot encoding
 - Normalisasi fitur numerik
 - Pembagian data menjadi data latih dan data uji (80:20)
@@ -76,8 +75,6 @@ Tahapan yang dilakukan:
 Model yang digunakan:
 
 - **Linear Regression** sebagai baseline
-- Hyperparameter tuning dilakukan menggunakan GridSearchCV untuk model alternatif (jika ada)
-- Model dibandingkan berdasarkan metrik evaluasi utama
 
 **Kelebihan Linear Regression:**
 - Mudah dipahami dan cepat dieksekusi
@@ -91,13 +88,14 @@ Model yang digunakan:
 Metrik evaluasi yang digunakan:
 
 - **R² Score (Coefficient of Determination)**: Mengukur seberapa baik variabel independen menjelaskan variabel dependen
+- **MSE (Mean Square Error)**: Mengukur rata-rata galat prediksi model
 - **RMSE (Root Mean Square Error)**: Mengukur rata-rata galat prediksi model terhadap nilai aktual
 
 ### Hasil
 
-(Misal diisi berdasarkan hasil notebook)
-- R²: 0.79
-- RMSE: 6000
+- R-squared: 0.9003161423608049
+- Mean Squared Error (MSE): 0.08629443097631509
+- Root Mean Squared Error (RMSE): 0.29375913768990247
 
 ### Interpretasi
 
@@ -105,5 +103,35 @@ Model cukup baik dalam memprediksi biaya medis, namun masih dapat ditingkatkan d
 
 ---
 
-> **Catatan:**
-> Anda dapat menambahkan grafik visualisasi, tabel korelasi, atau cuplikan kode dari notebook untuk memperjelas penjelasan di atas.
+## Hasil dan Kesimpulan
+
+### Masalah 1: Perkiraan Biaya Asuransi untuk Individu Tertentu
+
+- Kasus yang dianalisis: Pria berusia 30 tahun, bukan perokok, memiliki BMI 25, satu anak, dan tinggal di wilayah tenggara.
+- Fitur input disusun sesuai struktur model pelatihan, termasuk fitur interaksi `age_bmi_interaction`.
+- Setelah dilakukan prediksi menggunakan model regresi log, hasil dikonversi kembali ke skala asli menggunakan eksponensial.
+
+✅ **Perkiraan biaya asuransi: $3191.19**
+
+---
+
+### Masalah 2: Pengaruh Status Merokok terhadap Biaya Asuransi
+
+- Dilakukan perbandingan antara dua skenario:
+  - Individu perokok (`smoker_yes = 1`)
+  - Individu non-perokok (`smoker_yes = 0`)
+- Faktor lain seperti usia, jenis kelamin, BMI, anak, dan wilayah diasumsikan tetap sama.
+
+Hasil prediksi menunjukkan:
+
+✅ **Perkiraan biaya untuk perokok: $4304.62**  
+✅ **Perkiraan biaya untuk non-perokok: $3191.19**  
+📊 **Selisih biaya akibat merokok: $1113.43**
+
+---
+
+### Kesimpulan
+
+Status merokok memiliki dampak signifikan terhadap kenaikan biaya asuransi, bahkan ketika faktor lain tetap. Hal ini menunjukkan pentingnya variabel gaya hidup dalam menentukan risiko medis dan premi asuransi.
+
+---
