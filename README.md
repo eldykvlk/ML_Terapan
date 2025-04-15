@@ -44,18 +44,16 @@ Dataset diambil dari Kaggle dan memiliki 1338 baris data dengan fitur sebagai be
 
 ![Distribusi Fitur Numerik](https://drive.google.com/uc?export=view&id=1zTdIIkqEGWE1Aa6BLZ3nFHLzpfOR4zp8)
 
-- **age**: Mayoritas peserta berusia antara 20 hingga 60 tahun, dengan konsentrasi tertinggi di awal 20-an.
-- **bmi**: Memiliki distribusi mendekati normal dengan sebagian besar nilai berada pada rentang 25–35.
-- **children**: Sebagian besar individu memiliki 0 hingga 2 anak.
-- **charges**: Distribusinya sangat skew ke kanan, menunjukkan adanya individu dengan biaya medis sangat tinggi.
 
 ### Hubungan Fitur Numerik dengan charges
 
 ![Hubungan Fitur dan Charges](https://drive.google.com/uc?export=view&id=1_lUiNJBgnL0QQeaJz3vRdxxWChNzXXs7)
 
-- **age vs charges**: Terlihat hubungan positif — makin tua usia, makin tinggi biaya.
-- **bmi vs charges**: Tidak terlihat tren jelas secara umum, tetapi individu dengan BMI tinggi cenderung memiliki biaya lebih besar, kemungkinan karena faktor risiko kesehatan.
-- **children vs charges**: Tidak terlihat hubungan yang signifikan antara jumlah anak dengan biaya medis.
+
+- **Jenis Kelamin (sex):** Terdapat 676 individu berjenis kelamin laki-laki dan 662 individu berjenis kelamin perempuan, menunjukkan distribusi yang relatif seimbang.
+- **Status Merokok (smoker):** Mayoritas individu merupakan non-perokok sebanyak 1064 orang, sedangkan perokok sebanyak 274 orang.
+- **Wilayah Tempat Tinggal (region):** Distribusi wilayah cukup merata dengan rincian sebagai berikut: southeast (364), southwest (325), northwest (325), dan northeast (324).
+
 
 ## Data Preparation
 
