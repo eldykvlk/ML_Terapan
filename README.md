@@ -11,6 +11,8 @@ Permasalahan prediksi biaya medis penting untuk industri asuransi agar dapat men
 **Referensi:**
 - *Medical Cost Personal Dataset – Kaggle*
 
+---
+
 ## Business Understanding
 
 ### Problem Statements
@@ -28,108 +30,117 @@ Permasalahan prediksi biaya medis penting untuk industri asuransi agar dapat men
 - Menggunakan algoritma **Linear Regression** sebagai baseline model.
 - Melakukan **feature engineering** dan **evaluasi model menggunakan RMSE, MSE dan R²**.
 
+---
+
 ## Data Understanding
 
-Dataset diambil dari Kaggle dan memiliki 1338 baris data dengan fitur sebagai berikut:
+### Jumlah Data
+Dataset memiliki **1338 baris dan 7 kolom**.
 
-- `age` : Usia individu
-- `sex` : Jenis kelamin
-- `bmi` : Body Mass Index
-- `children` : Jumlah tanggungan anak
-- `smoker` : Apakah individu perokok atau tidak
-- `region` : Wilayah tempat tinggal (AS)
-- `charges` : Biaya medis individu
+### Kondisi Data
+- **Missing values**: Tidak ditemukan missing values.
+- **Duplikat**: Tidak ditemukan data duplikat.
+- **Outlier**: Terdapat outlier pada kolom `bmi`, yang telah ditangani dengan pembatasan pada persentil ke-95.
 
-### Distribusi Fitur Numerik
+### Uraian Fitur
+- `age`: Usia individu
+- `sex`: Jenis kelamin (`male` atau `female`)
+- `bmi`: Body Mass Index
+- `children`: Jumlah anak yang ditanggung
+- `smoker`: Status merokok (`yes` atau `no`)
+- `region`: Wilayah tempat tinggal
+- `charges`: Biaya medis aktual
+- `log_charges`: Transformasi log dari `charges`, untuk mengatasi skewness
 
-![Distribusi Fitur Numerik](https://drive.google.com/uc?export=view&id=1zTdIIkqEGWE1Aa6BLZ3nFHLzpfOR4zp8)
+### Sumber Data
+[https://www.kaggle.com/datasets/mirichoi0218/insurance](https://www.kaggle.com/datasets/mirichoi0218/insurance)
 
-
-### Hubungan Fitur Numerik dengan charges
-
-![Hubungan Fitur dan Charges](https://drive.google.com/uc?export=view&id=1_lUiNJBgnL0QQeaJz3vRdxxWChNzXXs7)
-
-
-- **Jenis Kelamin (sex):** Terdapat 676 individu berjenis kelamin laki-laki dan 662 individu berjenis kelamin perempuan, menunjukkan distribusi yang relatif seimbang.
-- **Status Merokok (smoker):** Mayoritas individu merupakan non-perokok sebanyak 1064 orang, sedangkan perokok sebanyak 274 orang.
-- **Wilayah Tempat Tinggal (region):** Distribusi wilayah cukup merata dengan rincian sebagai berikut: southeast (364), southwest (325), northwest (325), dan northeast (324).
-
+---
 
 ## Data Preparation
 
-Tahapan yang dilakukan:
+Langkah-langkah yang dilakukan:
 
-- Menghapus duplikat data
-- Encoding variabel kategorikal menggunakan one-hot encoding
-- Normalisasi fitur numerik
-- Pembagian data menjadi data latih dan data uji (80:20)
+1. Mengecek dan menghapus **duplikat** (tidak ditemukan).
+2. Pengecekan **missing values** (tidak ditemukan).
+3. **Transformasi logaritmik** pada `charges` menjadi `log_charges` untuk mengurangi skewness.
+4. **Penanganan outlier** pada `bmi` dengan membatasi nilai maksimal pada persentil ke-95.
+5. **Pembuatan fitur baru** `age_bmi_interaction` (perkalian antara `age` dan `bmi`).
+6. **One-hot encoding** untuk fitur kategorikal: `sex`, `smoker`, `region`.
+7. **Normalisasi fitur numerik** menggunakan `MinMaxScaler`.
+8. **Pembagian data** menjadi data latih dan data uji (80:20).
 
-**Alasan dilakukan:**
-- Model machine learning memerlukan input numerik
-- Menghindari bias skala antar fitur
+---
 
 ## Modeling
 
-Model yang digunakan:
+### Algoritma yang Digunakan
 
-- **Linear Regression** sebagai baseline
+- **Linear Regression**
 
-**Kelebihan Linear Regression:**
-- Mudah dipahami dan cepat dieksekusi
-- Cocok untuk interpretasi awal
+### Cara Kerja Linear Regression
 
-**Kekurangan:**
-- Tidak cocok untuk hubungan non-linear kompleks antar fitur
+Linear Regression adalah model statistik yang memprediksi nilai target sebagai kombinasi linear dari fitur-fitur input. Model ini menghitung bobot (koefisien) untuk masing-masing fitur dan membuat prediksi berdasarkan:
+
+![rumus](https://github.com/user-attachments/assets/0053c13c-8295-4b6f-907c-191a62487611)
+
+Dalam kasus ini, `y` adalah `log_charges`, yang kemudian dikembalikan ke skala asli dengan fungsi eksponensial (`exp`).
+
+### Parameter
+
+Menggunakan parameter **default** dari `LinearRegression()`:
+- `fit_intercept=True`
+- `n_jobs=None`
+
+---
 
 ## Evaluation
 
-Metrik evaluasi yang digunakan:
+### Metrik Evaluasi
+- **R² Score**: Seberapa baik variabel independen menjelaskan variabel dependen
+- **MSE (Mean Squared Error)**: Rata-rata kuadrat galat prediksi
+- **RMSE (Root Mean Squared Error)**: Akar kuadrat dari MSE
 
-- **R² Score (Coefficient of Determination)**: Mengukur seberapa baik variabel independen menjelaskan variabel dependen
-- **MSE (Mean Square Error)**: Mengukur rata-rata galat prediksi model
-- **RMSE (Root Mean Square Error)**: Mengukur rata-rata galat prediksi model terhadap nilai aktual
+### Hasil Evaluasi
 
-### Hasil
+- R² Score: 0.9003
+- MSE: 0.0863
+- RMSE: 0.2938
 
-- R-squared: 0.9003161423608049
-- Mean Squared Error (MSE): 0.08629443097631509
-- Root Mean Squared Error (RMSE): 0.29375913768990247
-
-### Interpretasi
-
-Model cukup baik dalam memprediksi biaya medis, namun masih dapat ditingkatkan dengan model non-linear atau ensemble.
+Model cukup baik dalam memprediksi biaya medis dan menunjukkan performa tinggi dengan kesalahan prediksi yang rendah.
 
 ---
 
 ## Hasil dan Kesimpulan
 
-### Masalah 1: Perkiraan Biaya Asuransi untuk Individu Tertentu
+### Masalah 1: Prediksi Biaya Asuransi untuk Pria, 30 Tahun, Non-Perokok
 
-- Kasus yang dianalisis: Pria berusia 30 tahun, bukan perokok, memiliki BMI 25, satu anak, dan tinggal di wilayah tenggara.
-- Fitur input disusun sesuai struktur model pelatihan, termasuk fitur interaksi `age_bmi_interaction`.
-- Setelah dilakukan prediksi menggunakan model regresi log, hasil dikonversi kembali ke skala asli menggunakan eksponensial.
+- Usia: 30  
+- Jenis kelamin: Pria  
+- BMI: 25  
+- Anak: 1  
+- Smoker: Tidak  
+- Wilayah: Tenggara
 
-✅ **Perkiraan biaya asuransi: $3191.19**
+✅ **Prediksi biaya medis: $3191.19**
 
 ---
 
-### Masalah 2: Pengaruh Status Merokok terhadap Biaya Asuransi
+### Masalah 2: Pengaruh Status Merokok
 
-- Dilakukan perbandingan antara dua skenario:
-  - Individu perokok (`smoker_yes = 1`)
-  - Individu non-perokok (`smoker_yes = 0`)
-- Faktor lain seperti usia, jenis kelamin, BMI, anak, dan wilayah diasumsikan tetap sama.
+Dibandingkan dua skenario (faktor lain tetap):
 
-Hasil prediksi menunjukkan:
-
-✅ **Perkiraan biaya untuk perokok: $4304.62**  
-✅ **Perkiraan biaya untuk non-perokok: $3191.19**  
-📊 **Selisih biaya akibat merokok: $1113.43**
+- **Perokok**: $4304.62  
+- **Non-perokok**: $3191.19  
+📊 **Selisih biaya: $1113.43**
 
 ---
 
 ### Kesimpulan
 
-Status merokok memiliki dampak signifikan terhadap kenaikan biaya asuransi, bahkan ketika faktor lain tetap. Hal ini menunjukkan pentingnya variabel gaya hidup dalam menentukan risiko medis dan premi asuransi.
+- Model mampu memberikan prediksi biaya medis dengan baik.
+- Status merokok memiliki dampak besar terhadap biaya, menambah hingga $1000+.
+- Gaya hidup menjadi faktor penting dalam penentuan premi asuransi.
 
 ---
+
