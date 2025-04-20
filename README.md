@@ -57,6 +57,29 @@ Dataset memiliki **1338 baris dan 7 kolom**.
 
 ---
 
+## Distribusi Grafik
+
+Untuk memahami data lebih dalam, dilakukan eksplorasi distribusi dari fitur kategorikal dan pengaruhnya terhadap biaya medis (`charges`):
+
+### Distribusi Fitur Kategorikal
+
+![stat1](https://github.com/user-attachments/assets/c3c02fb8-cd28-48a7-b3d6-ec8dbcba8dbd)
+
+- **Jenis Kelamin (`sex`)**: Jumlah pria dan wanita hampir seimbang.
+- **Status Merokok (`smoker`)**: Mayoritas individu adalah non-perokok.
+- **Wilayah (`region`)**: Data tersebar merata di keempat wilayah, dengan wilayah tenggara sedikit lebih dominan.
+
+### Hubungan Fitur dengan Biaya Medis
+
+![stat2](https://github.com/user-attachments/assets/79f38b61-943d-478f-a895-a536d3cb0a2a)
+
+
+- **Jenis Kelamin vs. Charges**: Tidak terdapat perbedaan signifikan dalam biaya antara pria dan wanita.
+- **Smoker vs. Charges**: Perokok memiliki biaya medis yang jauh lebih tinggi dibandingkan non-perokok, menunjukkan bahwa status merokok sangat memengaruhi biaya.
+- **Region vs. Charges**: Tidak terdapat perbedaan signifikan antar wilayah terhadap biaya medis.
+
+---
+
 ## Data Preparation
 
 Langkah-langkah yang dilakukan:
