@@ -88,10 +88,10 @@ Langkah-langkah yang dilakukan:
 2. Pengecekan **missing values** (tidak ditemukan).
 3. **Transformasi logaritmik** pada `charges` menjadi `log_charges` untuk mengurangi skewness.
 4. **Penanganan outlier** pada `bmi` dengan membatasi nilai maksimal pada persentil ke-95.
-5. **Pembuatan fitur baru** `age_bmi_interaction` (perkalian antara `age` dan `bmi`).
-6. **One-hot encoding** untuk fitur kategorikal: `sex`, `smoker`, `region`.
-7. **Normalisasi fitur numerik** menggunakan `MinMaxScaler`.
-8. **Pembagian data** menjadi data latih dan data uji (80:20).
+5. **One-hot encoding** untuk fitur kategorikal: `sex`, `smoker`, `region`.`bmi`).
+6. **Pembuatan fitur baru** `age_bmi_interaction` (perkalian antara `age` dan `bmi`).
+7. **Pemisahan Fitur dan Target** Setelah seluruh tahapan transformasi dan encoding selesai, dataset dipisahkan menjadi dua bagian: fitur (X) dan target (y). Fitur (X) mencakup semua kolom kecuali kolom target `log_charges`. Kolom `log_charges` digunakan sebagai variabel target (y) yang akan diprediksi oleh model regresi.
+8. **Pembagian Data menjadi Data Latih dan Data Uji (80:20)** Untuk pelatihan dan 20% untuk pengujian. Pembagian ini dilakukan menggunakan metode `train_test_split` dari sklearn, dengan stratifikasi berdasarkan kolom `smoker` untuk memastikan distribusi kategori perokok dan non-perokok yang seimbang di kedua set data.
 
 ---
 
